@@ -1,4 +1,5 @@
 import hashlib as hasher
+import datetime as date
 
 class Block:
     def __init__(self, index, timestamp, data, previous_hash):
@@ -13,3 +14,23 @@ class Block:
         sha.update(str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_hash))
         return sha.hexdigest()
     
+def create_genesis_block():
+    # builds manually the genesis block index zero
+    return Block(0, date.datetime.now(), "Genesis Block", "0")
+
+def next_block(last_block):
+    this_index = last_block.index + 1
+    this_timestamp = date.datetime.now()
+    this_data = "Hey! I'm block " + str(this_index)
+    this_hash = last_block.hash
+    return Block(this_index, this_timestamp, this_data, this_hash)
+
+#create the blockchain and add the genesis block
+blockchain = [create_genesis_block()]
+previous_block = blockchain[0]
+
+#amount of blocks after the genesis block
+num_of_blocks_to_add = 20
+
+#add blocks to the chain
+
